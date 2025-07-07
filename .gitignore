@@ -1,0 +1,7 @@
+# Ignore compiled files
+*.o
+
+# Ignore IDE folders
+.vscode/
+
+so_long
