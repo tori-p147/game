@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/07 22:29:01 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/08 22:46:01 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,8 @@ typedef struct s_game
 }			t_game;
 
 int			event_handler(int key, void *mlx);
+void		init_window(t_game *game);
+int			count_map_lines(const char *map_name);
+void		parse_map(const char *map_name, t_game *game);
 
 #endif

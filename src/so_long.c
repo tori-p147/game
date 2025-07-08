@@ -6,12 +6,13 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/07 22:29:17 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/08 22:48:25 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "so_long.h"
+#include "validator.h"
 
 int	event_handler(int key, void *mlx)
 {
@@ -44,12 +45,11 @@ int	count_map_lines(const char *map_name)
 	count = 0;
 	fd = open(map_name, O_RDONLY);
 	if (fd < 0)
-	{
-		perror("error when open file");
-		exit(EXIT_FAILURE);
-	}
+		exit_error("error when open file", NULL);
 	while ((line = get_next_line(fd)) != NULL)
 	{
+		if (!validate_line_length(line))
+			exit_error("map row length is not same", NULL);
 		count++;
 		free(line);
 	}
@@ -57,7 +57,7 @@ int	count_map_lines(const char *map_name)
 	return (count);
 }
 
-void	parse_map(const char *map_name, t_map *map)
+void	parse_map(const char *map_name, t_game *game)
 {
 	int		fd;
 	char	*line;
@@ -66,23 +66,26 @@ void	parse_map(const char *map_name, t_map *map)
 
 	row = 0;
 	rows = count_map_lines(map_name);
-	map->array = malloc(sizeof(char *) * (rows + 1));
-	map->rows = rows;
-	map->cols = 0;
+	game->map = malloc(sizeof(t_map *));
+	if (!game->map)
+		exit_error("map memory allocation fail", game);
+	game->map->array = malloc(sizeof(char *) * (rows + 1));
+	if (!game->map->array)
+		exit_error("map arrays memory allocation fail", game);
+	game->map->rows = rows;
+	game->map->cols = 0;
 	fd = open(map_name, O_RDONLY);
 	if (fd < 0)
-	{
-		perror("error occurred when open map");
-		exit(EXIT_FAILURE);
-	}
+		exit_error("error occurred when open map", game);
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		map->array[row] = line;
+		game->map->array[row] = line;
 		if (row == 0)
-			map->cols = ft_strlen(line) - (line[ft_strlen(line) - 1] == '\n');
+			game->map->cols = ft_strlen(line) - (line[ft_strlen(line)
+					- 1] == '\n');
 		row++;
 	}
-	map->array[row] = NULL;
+	game->map->array[row] = NULL;
 	close(fd);
 }
 
@@ -95,7 +98,8 @@ int	main(int argc, char **argv)
 		perror("args error");
 		exit(EXIT_FAILURE);
 	}
-	parse_map(argv[1], game.map);
+	parse_map(argv[1], &game);
+	validate_map_objects(&game);
 	init_window(&game);
 	mlx_loop(game.mlx_ptr);
 	return (0);
