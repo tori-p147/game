@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/08 22:48:25 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/10 17:47:11 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "init.h"
 #include "so_long.h"
 #include "validator.h"
 
@@ -22,20 +23,6 @@ int	event_handler(int key, void *mlx)
 	return (0);
 }
 
-void	init_window(t_game *game)
-{
-	int	win_width;
-	int	win_height;
-	int	tile_size;
-
-	tile_size = 64;
-	win_width = game->map->cols * tile_size;
-	win_height = game->map->rows * tile_size;
-	game->mlx_ptr = mlx_init();
-	game->win_ptr = mlx_new_window(game->mlx_ptr, win_width, win_height,
-			"so_long");
-}
-
 int	count_map_lines(const char *map_name)
 {
 	int		fd;
@@ -45,11 +32,10 @@ int	count_map_lines(const char *map_name)
 	count = 0;
 	fd = open(map_name, O_RDONLY);
 	if (fd < 0)
-		exit_error("error when open file", NULL);
+		exit_error("error occurred when trying read map file", NULL);
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		if (!validate_line_length(line))
-			exit_error("map row length is not same", NULL);
+		validate_line_length(line);
 		count++;
 		free(line);
 	}
@@ -57,36 +43,57 @@ int	count_map_lines(const char *map_name)
 	return (count);
 }
 
-void	parse_map(const char *map_name, t_game *game)
+void	alloc_map_array(const char *map_name, t_game *game)
 {
-	int		fd;
-	char	*line;
-	int		row;
-	int		rows;
+	int	i;
+	int	rows;
 
-	row = 0;
 	rows = count_map_lines(map_name);
-	game->map = malloc(sizeof(t_map *));
+	game->map = malloc(sizeof(t_map));
 	if (!game->map)
-		exit_error("map memory allocation fail", game);
+		exit_error("game.map allocation fail", game);
 	game->map->array = malloc(sizeof(char *) * (rows + 1));
 	if (!game->map->array)
-		exit_error("map arrays memory allocation fail", game);
+		exit_error("map.array[] memory allocation fail", game);
+	i = 0;
+	while (i < game->map->cols - 1)
+	{
+		game->map->array[i] = malloc(sizeof(char *) * (game->map->cols + 1));
+		if (!game->map->array[i])
+			exit_error("map.array[][] memory allocation fail", game);
+	}
 	game->map->rows = rows;
 	game->map->cols = 0;
-	fd = open(map_name, O_RDONLY);
-	if (fd < 0)
-		exit_error("error occurred when open map", game);
-	while ((line = get_next_line(fd)) != NULL)
+}
+
+void	parse_map_objects(t_game *game)
+{
+	int		i;
+	int		j;
+	char	**map_array;
+
+	i = 0;
+	while (i < game->map->rows)
 	{
-		game->map->array[row] = line;
-		if (row == 0)
-			game->map->cols = ft_strlen(line) - (line[ft_strlen(line)
-					- 1] == '\n');
-		row++;
+		j = 0;
+		map_array = game->map->array;
+		validate_wall(map_array[i][0], game);
+		validate_wall(map_array[i][game->map->cols - 1], game);
+		while (j < game->map->cols)
+		{
+			validate_wall(map_array[0][j], game);
+			validate_wall(map_array[game->map->rows - 1][j], game);
+			if (map_array[i][j] == 'P')
+				game->map->player_count++;
+			else if (map_array[i][j] == 'C')
+				game->map->collect_count++;
+			else if (map_array[i][j] == 'E')
+				game->map->exit_count++;
+			j++;
+		}
+		i++;
 	}
-	game->map->array[row] = NULL;
-	close(fd);
+	validate_objects_count(game);
 }
 
 int	main(int argc, char **argv)
@@ -98,9 +105,9 @@ int	main(int argc, char **argv)
 		perror("args error");
 		exit(EXIT_FAILURE);
 	}
-	parse_map(argv[1], &game);
-	validate_map_objects(&game);
+	init_map(argv[1], &game);
+	parse_map_objects(&game);
 	init_window(&game);
-	mlx_loop(game.mlx_ptr);
+	mlx_loop(game.mlx_display_ptr);
 	return (0);
 }

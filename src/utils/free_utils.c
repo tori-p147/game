@@ -20,8 +20,10 @@ void	free_map(t_map *map)
 	if (!map)
 		return ;
 	i = -1;
-	while (i < map->rows)
-		free(map->array[i++]);
+	while (i++ < map->rows - 1)
+	{
+		free(map->array[i]);
+	}
 	free(map->array);
 }
 
@@ -29,7 +31,13 @@ void	free_game(t_game *game)
 {
 	if (!game)
 		return ;
-	free(game->mlx_ptr);
-	free(game->win_ptr);
-	free_map(game->map);
+	// if (game->user_win_ptr && game->mlx_display_ptr)
+	// 	mlx_destroy_window(game->mlx_display_ptr, game->user_win_ptr);
+	// if (game->mlx_display_ptr)
+	// {
+	// 	mlx_destroy_display(game->mlx_display_ptr);
+	// 	free(game->mlx_display_ptr);
+	// }
+	if (game->map)
+		free_map(game->map);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:23:31 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/08 22:58:17 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:15:30 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exit_error(const char *msg, t_game *game)
 	exit(EXIT_FAILURE);
 }
 
-int	validate_line_length(char *line)
+void	validate_line_length(char *line)
 {
 	static int	old_line_length;
 	int			new_line_length;
@@ -32,43 +32,27 @@ int	validate_line_length(char *line)
 	printf("\n%d", new_line_length);
 	printf("\n---\n");
 	if (old_line_length != 0 && old_line_length != new_line_length)
-		return (0);
+		exit_error("map.rows length is not same", NULL);
 	old_line_length = new_line_length;
-	return (1);
 }
 
-int	validate_wall(char c)
+void	validate_wall(char c, t_game *game)
 {
+	const char	*err_no_walls_msg;
+
+	err_no_walls_msg = "error occurred because map haven`t walls";
 	if (c != '1')
-		return (0);
-	return (1);
+		exit_error(err_no_walls_msg, game);
 }
 
-void	validate_map_objects(t_game *game)
+void	validate_objects_count(t_game *game)
 {
-	int		i;
-	int		j;
-	char	*error_msg;
-
-	i = 0;
-	j = 0;
-	error_msg = "error occurred because map haven`t walls";
-	while (i < game->map->rows)
-	{
-		if (i == 0 && !validate_wall(game->map->array[0][i]))
-			exit_error(error_msg, game);
-		else if (i == game->map->rows - 1
-			&& !validate_wall(game->map->array[game->map->rows - 1][i]))
-			exit_error(error_msg, game);
-		while (j < game->map->cols)
-		{
-			if (j == 0 && !validate_wall(game->map->array[0][j]))
-				exit_error(error_msg, game);
-			else if (j == game->map->cols - 1
-				&& !validate_wall(game->map->array[game->map->cols - 1][j]))
-				exit_error(error_msg, game);
-			j++;
-		}
-		i++;
-	}
+	if (game->map->player_count > 1 || game->map->player_count == 0)
+		exit_error("error occurred because player not one", game);
+	if (game->map->player_count == 0)
+		exit_error("error occurred because player undefined", game);
+	if (game->map->collect_count == 0)
+		exit_error("error occurred because collectable not exist", game);
+	if (game->map->exit_count == 0)
+		exit_error("error occurred because exit not exists", game);
 }
