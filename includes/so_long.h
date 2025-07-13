@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/11 18:44:27 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/13 20:23:36 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "free_utils.h"
 # include "get_next_line.h"
 # include "init.h"
+# include "move_logic.h"
+# include "render.h"
 # include "validator.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
@@ -29,8 +31,8 @@
 typedef struct s_map
 {
 	char	**array;
-	size_t	rows;
-	size_t	cols;
+	int		rows;
+	int		cols;
 	size_t	player_count;
 	size_t	exit_count;
 	size_t	collect_count;
@@ -40,10 +42,19 @@ typedef struct s_game
 {
 	void	*mlx_display_ptr;
 	void	*user_win_ptr;
+	void	*space_img;
+	void	*player_img;
+	void	*wall_img;
+	void	*item_img;
+	void	*exit_img;
+	int		tile_size;
+	int		win_width;
+	int		win_height;
+	int		player_x;
+	int		player_y;
 	t_map	*map;
 }			t_game;
 
-int			event_handler(int key, void *mlx);
 void		alloc_map_arrays(const char *map_name, t_game *game);
 void		parse_map_objects(t_game *game);
 

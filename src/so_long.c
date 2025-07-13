@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/11 19:09:55 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/13 20:24:12 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "so_long.h"
-
-int	event_handler(int key, void *mlx)
-{
-	(void)key;
-	(void)mlx;
-	printf("called\n");
-	return (0);
-}
 
 void	count_map_lines(const char *map_name, t_game *game)
 {
@@ -50,7 +42,7 @@ void	count_map_lines(const char *map_name, t_game *game)
 
 void	alloc_map_arrays(const char *map_name, t_game *game)
 {
-	size_t	i;
+	int	i;
 
 	count_map_lines(map_name, game);
 	game->map->array = malloc(sizeof(char *) * (game->map->rows + 1));
@@ -64,35 +56,35 @@ void	alloc_map_arrays(const char *map_name, t_game *game)
 			exit_error("map.array[][] memory allocation fail", game);
 		i++;
 	}
+	game->map->array[i] = NULL;
 }
 
 void	parse_map_objects(t_game *game)
 {
-	size_t	i;
-	size_t	j;
-	char	**map_array;
+	int		x;
+	int		y;
+	char	tile;
 
-	i = 0;
-	while (i < game->map->rows)
+	y = 0;
+	while (y < game->map->rows)
 	{
-		j = 0;
-		map_array = game->map->array;
-		printf("%s", map_array[i]);
-		validate_wall(map_array[i][0], game);
-		// validate_wall(map_array[i][game->map->cols - 1], game);
-		while (j < game->map->cols)
+		x = 0;
+		if (y == 0 || y == game->map->rows - 1)
+			validate_wall(game->map->array[y][x], game);
+		while (x < game->map->cols)
 		{
-			// validate_wall(map_array[0][j], game);
-			// validate_wall(map_array[game->map->rows - 1][j], game);
-			if (map_array[i][j] == 'P')
+			tile = game->map->array[y][x];
+			if (x == 0 || x == game->map->cols - 1)
+				validate_wall(tile, game);
+			if (tile == 'P')
 				game->map->player_count++;
-			else if (map_array[i][j] == 'C')
+			else if (tile == 'C')
 				game->map->collect_count++;
-			else if (map_array[i][j] == 'E')
+			else if (tile == 'E')
 				game->map->exit_count++;
-			j++;
+			x++;
 		}
-		i++;
+		y++;
 	}
 	validate_objects_count(game);
 }
@@ -109,6 +101,8 @@ int	main(int argc, char **argv)
 	init_map(argv[1], &game);
 	parse_map_objects(&game);
 	init_window(&game);
+	render_map(&game);
+	mlx_hook(game.user_win_ptr, KeyPress, KeyPressMask, &key_press, &game);
 	mlx_loop(game.mlx_display_ptr);
 	return (0);
 }

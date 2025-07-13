@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:34:44 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/11 16:43:16 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/13 20:24:38 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 void	free_map(t_map *map)
 {
-	size_t	i;
+	int	i;
 
 	if (!map)
 		return ;
-	i = -1;
-	while (i++ < map->rows - 1)
+	i = 0;
+	while (i < map->rows - 1)
 	{
 		free(map->array[i]);
+		i++;
 	}
 	free(map->array);
 }
