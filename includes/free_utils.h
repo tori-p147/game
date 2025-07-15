@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:39:09 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/11 15:20:51 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:12:03 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ typedef struct s_map	t_map;
 typedef struct s_game	t_game;
 
 void					free_map(t_map *map);
-void					free_game(t_game *game);
+int						free_game(t_game *game);
 
 #endif

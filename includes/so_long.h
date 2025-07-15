@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/13 20:23:36 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:48:23 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "validator.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <errno.h>
 # include <libft.h>
 # include <mlx.h>
 # include <stddef.h>
@@ -35,7 +36,7 @@ typedef struct s_map
 	int		cols;
 	size_t	player_count;
 	size_t	exit_count;
-	size_t	collect_count;
+	size_t	remain_items_count;
 }			t_map;
 
 typedef struct s_game
@@ -57,5 +58,6 @@ typedef struct s_game
 
 void		alloc_map_arrays(const char *map_name, t_game *game);
 void		parse_map_objects(t_game *game);
+int			exit_game(t_game *game);
 
 #endif

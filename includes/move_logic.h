@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_logic.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:31:51 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/13 19:44:46 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 14:36:27 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef enum e_keycode
 	KEY_W = 119,
 	KEY_A = 97,
 	KEY_S = 115,
-	KEY_D = 110,
+	KEY_D = 100,
 	KEY_ESC = 65307
 }						t_keycode;
 

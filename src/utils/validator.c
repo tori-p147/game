@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:23:31 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/13 19:43:08 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:56:33 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	exit_error(const char *msg, t_game *game)
+int	exit_error(const char *msg, t_game *game)
 {
-	perror(msg);
 	if (game)
-		free_game(game);
+		free_map(game->map);
+	write(2, msg, ft_strlen(msg));
 	exit(EXIT_FAILURE);
 }
 
@@ -33,7 +33,7 @@ size_t	validate_rows_length(char *line)
 	printf("\n%ld", new_line_length);
 	printf("\n---\n");
 	if (old_line_length != 0 && old_line_length != new_line_length)
-		exit_error("map.rows length is not same", NULL);
+		exit_error("map.rows length is not same\n", NULL);
 	old_line_length = new_line_length;
 	return (map_cols = new_line_length);
 }
@@ -41,17 +41,17 @@ size_t	validate_rows_length(char *line)
 void	validate_wall(char c, t_game *game)
 {
 	if (c != '1')
-		exit_error("error occurred because map haven`t walls", game);
+		exit_error("Error occurred because map haven`t walls\n", game);
 }
 
 void	validate_objects_count(t_game *game)
 {
 	if (game->map->player_count > 1 || game->map->player_count == 0)
-		exit_error("error occurred because player not one", game);
+		exit_error("Error occurred because player not one\n", game);
 	if (game->map->player_count == 0)
-		exit_error("error occurred because player undefined", game);
-	if (game->map->collect_count == 0)
-		exit_error("error occurred because collectable not exist", game);
+		exit_error("Error occurred because player undefined\n", game);
+	if (game->map->remain_items_count == 0)
+		exit_error("Error occurred because collectable not exist\n", game);
 	if (game->map->exit_count == 0)
-		exit_error("error occurred because exit not exists", game);
+		exit_error("Error occurred because exit not exists\n", game);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:37:20 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/13 17:02:39 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:31:17 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_space(t_game *game)
 	int	img_height;
 
 	game->space_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"assets/space.xpm", &img_width, &img_height);
+			"textures/space.xpm", &img_width, &img_height);
 }
 
 void	init_player(t_game *game)
@@ -27,7 +27,7 @@ void	init_player(t_game *game)
 	int	img_height;
 
 	game->player_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"assets/usagi.xpm", &img_width, &img_height);
+			"textures/usagi.xpm", &img_width, &img_height);
 }
 void	init_wall(t_game *game)
 {
@@ -35,7 +35,7 @@ void	init_wall(t_game *game)
 	int	img_height;
 
 	game->wall_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"assets/wall.xpm", &img_width, &img_height);
+			"textures/wall.xpm", &img_width, &img_height);
 }
 
 void	init_item(t_game *game)
@@ -44,7 +44,7 @@ void	init_item(t_game *game)
 	int	img_height;
 
 	game->item_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"assets/carrot.xpm", &img_width, &img_height);
+			"textures/carrot.xpm", &img_width, &img_height);
 }
 
 void	init_exit(t_game *game)
@@ -53,7 +53,7 @@ void	init_exit(t_game *game)
 	int	img_height;
 
 	game->exit_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"assets/exit.xpm", &img_width, &img_height);
+			"textures/exit.xpm", &img_width, &img_height);
 }
 
 void	init_window(t_game *game)
@@ -94,7 +94,4 @@ void	init_map(const char *map_name, t_game *game)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	game->map->player_count = 0;
-	game->map->exit_count = 0;
-	game->map->collect_count = 0;
 }

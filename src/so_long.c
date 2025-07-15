@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/13 20:24:12 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:33:25 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,20 @@ void	parse_map_objects(t_game *game)
 	while (y < game->map->rows)
 	{
 		x = 0;
-		if (y == 0 || y == game->map->rows - 1)
-			validate_wall(game->map->array[y][x], game);
 		while (x < game->map->cols)
 		{
 			tile = game->map->array[y][x];
-			if (x == 0 || x == game->map->cols - 1)
+			if (y == 0 || y == game->map->rows - 1 || x == 0
+				|| x == game->map->cols - 1)
 				validate_wall(tile, game);
 			if (tile == 'P')
+			{
 				game->map->player_count++;
+				game->player_x = x;
+				game->player_y = y;
+			}
 			else if (tile == 'C')
-				game->map->collect_count++;
+				game->map->remain_items_count++;
 			else if (tile == 'E')
 				game->map->exit_count++;
 			x++;
@@ -96,13 +99,14 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		perror("args error");
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 	init_map(argv[1], &game);
 	parse_map_objects(&game);
 	init_window(&game);
 	render_map(&game);
 	mlx_hook(game.user_win_ptr, KeyPress, KeyPressMask, &key_press, &game);
+	mlx_hook(game.user_win_ptr, DestroyNotify, NoEventMask, &free_game, &game);
 	mlx_loop(game.mlx_display_ptr);
 	return (0);
 }

@@ -3,45 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   move_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:30:33 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/13 20:39:24 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:38:58 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	move_player(t_game *game, int dx, int dy)
+void	move_player(t_game *game, int new_y, int new_x)
 {
 	char	target_tile;
 
-	target_tile = game->map->array[dx][dy];
+	// int	steps_count;
+	// steps_count = 0;
+	target_tile = game->map->array[new_y][new_x];
 	if (target_tile != '1')
 	{
-		if (target_tile == 'C')
-			game->map->collect_count--;
-		game->player_x = dx;
-		game->player_y = dy;
-		render_map(game);
+		if (target_tile == 'E')
+		{
+			if (game->map->remain_items_count != 0)
+			{
+				printf("Check %ld item(s) before exit",
+					game->map->remain_items_count);
+			}
+			else
+			{
+				mlx_string_put(game->mlx_display_ptr, game->user_win_ptr, 10,
+					10, 0xFFFFFF, "You win!");
+				free_game(game);
+			}
+		}
+		else
+		{
+			if (target_tile == 'C')
+				game->map->remain_items_count--;
+			game->map->array[game->player_y][game->player_x] = '0';
+			game->map->array[new_y][new_x] = 'P';
+			game->player_y = new_y;
+			game->player_x = new_x;
+		}
 	}
+	render_map(game);
 }
 
 int	key_press(int keycode, t_game *game)
 {
-	printf("%d", game->player_x);
 	if (keycode == KEY_W)
-		move_player(game, game->player_x - 1, game->player_y);
+		move_player(game, game->player_y - 1, game->player_x);
 	else if (keycode == KEY_A)
-	{
-	}
+		move_player(game, game->player_y, game->player_x - 1);
 	else if (keycode == KEY_S)
-	{
-	}
+		move_player(game, game->player_y + 1, game->player_x);
 	else if (keycode == KEY_D)
-	{
-	}
+		move_player(game, game->player_y, game->player_x + 1);
 	else if (keycode == KEY_ESC)
-		mlx_destroy_window(game->mlx_display_ptr, game->user_win_ptr);
+		free_game(game);
 	return (0);
 }
