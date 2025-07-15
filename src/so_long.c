@@ -6,11 +6,10 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 17:33:25 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 19:02:33 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
 #include "so_long.h"
 
 void	count_map_lines(const char *map_name, t_game *game)
@@ -59,10 +58,32 @@ void	alloc_map_arrays(const char *map_name, t_game *game)
 	game->map->array[i] = NULL;
 }
 
+static void	validate_tile(t_game *game, char tile, int y, int x)
+{
+	if (y == 0 || y == game->map->rows - 1 || x == 0 || x == game->map->cols
+		- 1)
+		validate_wall(tile, game);
+	if (tile == 'P')
+	{
+		game->map->player_count++;
+		game->player_x = x;
+		game->player_y = y;
+	}
+	else if (tile == 'C')
+		game->map->remain_items_count++;
+	else if (tile == 'E')
+		game->map->exit_count++;
+	else
+	{
+		if (tile != '0' && tile != '1')
+			exit_error("Error: map has invalid character\n", game);
+	}
+}
+
 void	parse_map_objects(t_game *game)
 {
-	int		x;
 	int		y;
+	int		x;
 	char	tile;
 
 	y = 0;
@@ -72,19 +93,7 @@ void	parse_map_objects(t_game *game)
 		while (x < game->map->cols)
 		{
 			tile = game->map->array[y][x];
-			if (y == 0 || y == game->map->rows - 1 || x == 0
-				|| x == game->map->cols - 1)
-				validate_wall(tile, game);
-			if (tile == 'P')
-			{
-				game->map->player_count++;
-				game->player_x = x;
-				game->player_y = y;
-			}
-			else if (tile == 'C')
-				game->map->remain_items_count++;
-			else if (tile == 'E')
-				game->map->exit_count++;
+			validate_tile(game, tile, y, x);
 			x++;
 		}
 		y++;
