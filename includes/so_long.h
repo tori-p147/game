@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 17:48:23 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 21:05:25 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_game
 	int		win_height;
 	int		player_x;
 	int		player_y;
+	int		exit_x;
+	int		exit_y;
 	t_map	*map;
 }			t_game;
 

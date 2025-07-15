@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 19:02:33 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 23:12:52 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ static void	validate_tile(t_game *game, char tile, int y, int x)
 	if (y == 0 || y == game->map->rows - 1 || x == 0 || x == game->map->cols
 		- 1)
 		validate_wall(tile, game);
-	if (tile == 'P')
+	else if (tile == 'P')
 	{
+		printf("%zu\n", game->map->player_count);
 		game->map->player_count++;
 		game->player_x = x;
 		game->player_y = y;
@@ -72,7 +73,11 @@ static void	validate_tile(t_game *game, char tile, int y, int x)
 	else if (tile == 'C')
 		game->map->remain_items_count++;
 	else if (tile == 'E')
+	{
 		game->map->exit_count++;
+		game->exit_x = x;
+		game->exit_y = y;
+	}
 	else
 	{
 		if (tile != '0' && tile != '1')
@@ -99,6 +104,7 @@ void	parse_map_objects(t_game *game)
 		y++;
 	}
 	validate_objects_count(game);
+	// validate_path(game);
 }
 
 int	main(int argc, char **argv)

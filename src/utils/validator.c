@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:23:31 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 17:56:33 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/15 23:16:27 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,41 @@ void	validate_objects_count(t_game *game)
 		exit_error("Error occurred because collectable not exist\n", game);
 	if (game->map->exit_count == 0)
 		exit_error("Error occurred because exit not exists\n", game);
+}
+// add point in queue
+static void	enqueue(t_queue *q, int x, int y)
+{
+	t_point	new_point;
+
+	new_point.x = x;
+	new_point.y = y;
+	q->data[q->tail] = new_point;
+	q->tail++;
+}
+
+// pull point from queue
+dequeue(t_queue *q)
+{
+}
+
+is_empty(t_queue *q)
+{
+}
+
+void	validate_path(t_game *game)
+{
+	t_queue	queue;
+	char	**visited;
+	char	*map_row;
+	int		i;
+
+	i = 0;
+	visited = malloc(sizeof(char *) * game->map->rows + 1);
+	map_row = game->map->array[i];
+	while (i < game->map->cols - 1)
+		visited[i] = ft_strdup(game->map->array[i]);
+	visited[i] = NULL;
+	init_queue(&queue, game->map->rows * game->map->cols);
+	enqueue(&queue, game->player_x, game->player_y);
+	visited[game->player_y][game->player_x] = 1;
 }
