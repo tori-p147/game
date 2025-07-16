@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:35:23 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/16 19:00:58 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/16 22:18:30 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ void	push(t_queue *q, t_tile new_point)
 	int	i;
 
 	i = q->head;
-	q->data[q->tail] = new_point;
-	q->tail++;
+	q->data[q->tail++] = new_point;
 	while (i < q->tail)
 	{
-		printf("AFTER push x = %d, y = %d\n", q->data[i].x, q->data[i].y);
+		printf("AFTER push y = %d, x = %d\n", q->data[i].y, q->data[i].x);
 		i++;
 	}
 }
@@ -43,7 +42,7 @@ t_tile	pop(t_queue *q)
 	curr = q->data[q->head++];
 	while (i < q->tail)
 	{
-		printf("AFTER pop x = %d, y = %d\n", q->data[i].x, q->data[i].y);
+		printf("AFTER pop y = %d, x = %d\n", q->data[i].y, q->data[i].x);
 		i++;
 	}
 	return (curr);
@@ -55,4 +54,13 @@ int	is_empty(t_queue *q)
 	if (q->head == q->tail)
 		return (1);
 	return (0);
+}
+
+t_tile	create_node(int y, int x)
+{
+	t_tile	new_node;
+
+	new_node.y = y;
+	new_node.x = x;
+	return (new_node);
 }

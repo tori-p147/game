@@ -7,7 +7,14 @@ MLX_DIR = $(HOME)/mlx
 GNL_DIR = gnl
 PRINTF_DIR = printf
 
-SRC = $(SRC_DIR)/so_long.c $(SRC_DIR)/utils/validator.c $(SRC_DIR)/utils/free_utils.c $(SRC_DIR)/utils/init.c $(SRC_DIR)/utils/render.c $(SRC_DIR)/utils/move_logic.c
+SRC = $(SRC_DIR)/so_long.c \
+	$(SRC_DIR)/utils/validator.c \
+	$(SRC_DIR)/utils/free_utils.c \
+	$(SRC_DIR)/utils/init.c \
+	$(SRC_DIR)/utils/render.c \
+	$(SRC_DIR)/utils/move_logic.c \
+	$(SRC_DIR)/utils/queue.c
+	
 OBJ = $(SRC:.c=.o)
 LIBFT_A = $(LIBFT_DIR)/libft.a
 MLX_A = $(MLX_DIR)/libmlx_Linux.a

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/16 16:37:33 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:09:37 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ typedef struct s_game
 	t_map	*map;
 }			t_game;
 
+int			exit_error(const char *msg, t_game *game);
 void		alloc_map_arrays(const char *map_name, t_game *game);
 void		parse_map_objects(t_game *game);
-int			exit_game(t_game *game);
+void		validate_tile(t_game *game, char tile, int y, int x);
+void		validate_tile(t_game *game, char tile, int y, int x);
 
 #endif

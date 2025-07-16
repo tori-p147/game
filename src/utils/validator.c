@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:23:31 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/16 19:04:34 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/16 22:27:18 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	exit_error(const char *msg, t_game *game)
-{
-	if (game)
-		free_map(game->map);
-	write(2, msg, ft_strlen(msg));
-	exit(EXIT_FAILURE);
-}
 
 size_t	validate_rows_length(char *line)
 {
@@ -38,10 +30,11 @@ size_t	validate_rows_length(char *line)
 	return (map_cols = new_line_length);
 }
 
-void	is_wall(char c, t_game *game)
+int	is_wall(char c)
 {
 	if (c != '1')
-		exit_error("Error occurred because map haven`t walls\n", game);
+		return (0);
+	return (1);
 }
 
 void	validate_objects_count(t_game *game)
@@ -56,54 +49,69 @@ void	validate_objects_count(t_game *game)
 		exit_error("Error occurred because exit not exists\n", game);
 }
 
-static int	check_neighbor(char neighbor)
+void	serch_and_pop_neighbors(t_game *game, t_queue *q, t_tile curr,
+		bool **visited)
 {
-	if (neighbor != '1')
-		return (0);
-	return (1);
-}
-
-void	serch_and_pop_neighbors(t_game *game, t_queue *q, t_tile curr)
-{
-	int		i;
-	char	tile;
-	t_tile	neighbor;
-	int		dy[4] = {-1, 0, 1, 0};
-	int		dx[4] = {0, -1, 0, 1};
+	int			i;
+	char		tile;
+	t_tile		neighbor;
+	const int	dy[4] = {-1, 0, 1, 0};
+	const int	dx[4] = {0, -1, 0, 1};
 
 	i = 0;
 	while (i < 4)
 	{
+		printf("search tile: y = %d x = %d\n", curr.y + dy[i], curr.x + dx[i]);
 		tile = game->map->array[curr.y + dy[i]][curr.x + dx[i]];
-		if (check_neighbor(neighbor))
+		if (!is_wall(tile) && visited[curr.y + dy[i]][curr.x + dx[i]] == false
+			&& (curr.y + dy[i] < game->map->rows && curr.y + dy[i] > 0)
+			&& (curr.x + dx[i] < game->map->cols && curr.x + dx[i] > 0))
 		{
-			neighbor.x = curr.y + dy[i];
-			neighbor.y = curr.x + dx[i];
-			push(q, neighbor);
+			push(q, create_node(neighbor.y = curr.y + dy[i], neighbor.x = curr.x
+					+ dx[i]));
+			visited[curr.y + dy[i]][curr.x + dx[i]] = true;
+			printf("added node: y = %d x = %d\n", curr.y + dy[i], curr.x
+				+ dx[i]);
 		}
 		i++;
 	}
 }
 
-int	validate_path(t_game *game)
+int	is_has_exit(t_game *game)
 {
 	t_queue	q;
 	int		i;
 	t_tile	curr;
-	t_tile	neighbor;
+	bool	**visited;
+	int		step_count;
 
 	i = 0;
+	step_count = 0;
+	printf("PLAYER: y=%d x=%d\n", game->player_y, game->player_x);
+	visited = malloc(sizeof(bool *) * game->map->rows + 1);
+	if (!visited)
+		exit_error("visited[] memory allocation fail", game);
+	while (i < game->map->cols - 1)
+	{
+		visited[i] = malloc(sizeof(bool) * game->map->cols + 1);
+		if (!visited[i])
+			exit_error("visited[][] memory allocation fail", game);
+		i++;
+	}
 	init_queue(&q, game->map->rows * game->map->cols);
-	push(&q, game->player_x, game->player_y);
+	push(&q, create_node(game->player_y, game->player_x));
 	while (!is_empty(&q))
 	{
-		curr = pop(q);
-		curr.visited = true;
+		curr = pop(&q);
+		visited[curr.y][curr.x] = true;
+		printf("poped curr: y = %d x = %d\n", curr.y, curr.x);
 		if (curr.x == game->exit_x && curr.y == game->exit_y)
 			return (1);
 		else
 		{
-			serch_and_pop_neighbors(&game, &q, &curr);
+			serch_and_pop_neighbors(game, &q, curr, visited);
+			step_count++;
+			printf("STEPS: %d\n", step_count);
 		}
 	}
 	return (0);

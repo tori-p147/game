@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:36:09 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/16 19:01:29 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:22:05 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void		init_queue(t_queue *q, int capacity);
 void		push(t_queue *q, t_tile new_point);
 t_tile		pop(t_queue *q);
 int			is_empty(t_queue *q);
+t_tile		create_node(int y, int x);
 
 #endif

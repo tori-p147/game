@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/16 17:44:13 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:00:22 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	exit_error(const char *msg, t_game *game)
+{
+	if (game)
+		free_map(game->map);
+	write(2, msg, ft_strlen(msg));
+	exit(EXIT_FAILURE);
+}
 
 void	count_map_lines(const char *map_name, t_game *game)
 {
@@ -58,14 +66,13 @@ void	alloc_map_arrays(const char *map_name, t_game *game)
 	game->map->array[i] = NULL;
 }
 
-static void	validate_tile(t_game *game, char tile, int y, int x)
+void	validate_tile(t_game *game, char tile, int y, int x)
 {
-	if (y == 0 || y == game->map->rows - 1 || x == 0 || x == game->map->cols
-		- 1)
-		is_wall(tile, game);
+	if ((y == 0 || y == game->map->rows - 1 || x == 0 || x == game->map->cols
+			- 1) && !is_wall(tile))
+		exit_error("Error occurred because map haven`t walls\n", game);
 	else if (tile == 'P')
 	{
-		printf("%zu\n", game->map->player_count);
 		game->map->player_count++;
 		game->player_x = x;
 		game->player_y = y;
@@ -104,7 +111,8 @@ void	parse_map_objects(t_game *game)
 		y++;
 	}
 	validate_objects_count(game);
-	validate_path(game);
+	if (!is_has_exit(game))
+		exit_error("map has not exit", game);
 }
 
 int	main(int argc, char **argv)
