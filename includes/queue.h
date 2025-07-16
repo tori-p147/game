@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validator.h                                        :+:      :+:    :+:   */
+/*   queue.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 22:39:06 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/16 19:00:33 by vmatsuda         ###   ########.fr       */
+/*   Created: 2025/07/16 16:36:09 by vmatsuda          #+#    #+#             */
+/*   Updated: 2025/07/16 19:01:29 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VALIDATOR_H
-# define VALIDATOR_H
+#ifndef QUEUE_H
+# define QUEUE_H
 
 # include "so_long.h"
+# include <stdbool.h>
 
-typedef struct s_game	t_game;
+typedef struct s_tile
+{
+	int		x;
+	int		y;
+	bool	visited;
+}			t_tile;
 
-int						exit_error(const char *msg, t_game *game);
-size_t					validate_rows_length(char *line);
-void					is_wall(char c, t_game *game);
-void					validate_objects_count(t_game *game);
-int						validate_path(t_game *game);
+typedef struct s_queue
+{
+	t_tile	*data;
+	int		head;
+	int		tail;
+	int		capacity;
+}			t_queue;
+
+void		init_queue(t_queue *q, int capacity);
+void		push(t_queue *q, t_tile new_point);
+t_tile		pop(t_queue *q);
+int			is_empty(t_queue *q);
 
 #endif

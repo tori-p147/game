@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:23:31 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 23:16:27 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:04:34 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ size_t	validate_rows_length(char *line)
 	return (map_cols = new_line_length);
 }
 
-void	validate_wall(char c, t_game *game)
+void	is_wall(char c, t_game *game)
 {
 	if (c != '1')
 		exit_error("Error occurred because map haven`t walls\n", game);
@@ -55,40 +55,56 @@ void	validate_objects_count(t_game *game)
 	if (game->map->exit_count == 0)
 		exit_error("Error occurred because exit not exists\n", game);
 }
-// add point in queue
-static void	enqueue(t_queue *q, int x, int y)
-{
-	t_point	new_point;
 
-	new_point.x = x;
-	new_point.y = y;
-	q->data[q->tail] = new_point;
-	q->tail++;
+static int	check_neighbor(char neighbor)
+{
+	if (neighbor != '1')
+		return (0);
+	return (1);
 }
 
-// pull point from queue
-dequeue(t_queue *q)
+void	serch_and_pop_neighbors(t_game *game, t_queue *q, t_tile curr)
 {
-}
-
-is_empty(t_queue *q)
-{
-}
-
-void	validate_path(t_game *game)
-{
-	t_queue	queue;
-	char	**visited;
-	char	*map_row;
 	int		i;
+	char	tile;
+	t_tile	neighbor;
+	int		dy[4] = {-1, 0, 1, 0};
+	int		dx[4] = {0, -1, 0, 1};
 
 	i = 0;
-	visited = malloc(sizeof(char *) * game->map->rows + 1);
-	map_row = game->map->array[i];
-	while (i < game->map->cols - 1)
-		visited[i] = ft_strdup(game->map->array[i]);
-	visited[i] = NULL;
-	init_queue(&queue, game->map->rows * game->map->cols);
-	enqueue(&queue, game->player_x, game->player_y);
-	visited[game->player_y][game->player_x] = 1;
+	while (i < 4)
+	{
+		tile = game->map->array[curr.y + dy[i]][curr.x + dx[i]];
+		if (check_neighbor(neighbor))
+		{
+			neighbor.x = curr.y + dy[i];
+			neighbor.y = curr.x + dx[i];
+			push(q, neighbor);
+		}
+		i++;
+	}
+}
+
+int	validate_path(t_game *game)
+{
+	t_queue	q;
+	int		i;
+	t_tile	curr;
+	t_tile	neighbor;
+
+	i = 0;
+	init_queue(&q, game->map->rows * game->map->cols);
+	push(&q, game->player_x, game->player_y);
+	while (!is_empty(&q))
+	{
+		curr = pop(q);
+		curr.visited = true;
+		if (curr.x == game->exit_x && curr.y == game->exit_y)
+			return (1);
+		else
+		{
+			serch_and_pop_neighbors(&game, &q, &curr);
+		}
+	}
+	return (0);
 }

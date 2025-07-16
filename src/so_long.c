@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 23:12:52 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/16 17:44:13 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	validate_tile(t_game *game, char tile, int y, int x)
 {
 	if (y == 0 || y == game->map->rows - 1 || x == 0 || x == game->map->cols
 		- 1)
-		validate_wall(tile, game);
+		is_wall(tile, game);
 	else if (tile == 'P')
 	{
 		printf("%zu\n", game->map->player_count);
@@ -104,7 +104,7 @@ void	parse_map_objects(t_game *game)
 		y++;
 	}
 	validate_objects_count(game);
-	// validate_path(game);
+	validate_path(game);
 }
 
 int	main(int argc, char **argv)

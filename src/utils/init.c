@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:37:20 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 22:33:25 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:38:18 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,4 @@ void	init_map(const char *map_name, t_game *game)
 	game->map->player_count = 0;
 	game->map->exit_count = 0;
 	game->map->remain_items_count = 0;
-}
-
-void	init_queue(t_queue *q, int capacity)
-{
-	q->data = malloc(sizeof(t_point) * capacity);
-	q->head = 0;
-	q->tail = 0;
-	q->capacity = capacity;
 }

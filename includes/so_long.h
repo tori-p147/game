@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 21:05:25 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:37:33 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "get_next_line.h"
 # include "init.h"
 # include "move_logic.h"
+# include "queue.h"
 # include "render.h"
 # include "validator.h"
 # include <X11/X.h>
