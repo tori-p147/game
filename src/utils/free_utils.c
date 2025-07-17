@@ -6,11 +6,31 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:34:44 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 16:43:50 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:54:44 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	free_visited(bool ***visited, t_game *game)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < game->map->rows)
+	{
+		x = 0;
+		while (x < game->map->cols)
+		{
+			free(visited[y][x]);
+			x++;
+		}
+		free(visited[y]);
+		y++;
+	}
+	free(visited);
+}
 
 void	free_map(t_map *map)
 {
@@ -34,6 +54,7 @@ int	free_game(t_game *game)
 	free(game->exit_img);
 	free(game->item_img);
 	free(game->space_img);
+	mlx_clear_window(game->mlx_display_ptr, game->user_win_ptr);
 	mlx_destroy_window(game->mlx_display_ptr, game->user_win_ptr);
 	mlx_destroy_display(game->mlx_display_ptr);
 	free(game->mlx_display_ptr);

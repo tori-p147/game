@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:30:33 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/15 18:56:40 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:01:36 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	move_player(t_game *game, int new_y, int new_x)
 		{
 			if (game->map->remain_items_count != 0)
 			{
-				printf("Check %ld item(s) before exit",
+				printf("Check %d item(s) before exit",
 					game->map->remain_items_count);
 			}
 			else

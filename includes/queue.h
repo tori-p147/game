@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:36:09 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/16 20:22:05 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/17 19:01:12 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define QUEUE_H
 
 # include "so_long.h"
-# include <stdbool.h>
 
 typedef struct s_tile
 {
 	int		x;
 	int		y;
-	bool	visited;
+	int		steps;
+	int		collected_count;
 }			t_tile;
 
 typedef struct s_queue
@@ -31,7 +31,7 @@ typedef struct s_queue
 	int		capacity;
 }			t_queue;
 
-void		init_queue(t_queue *q, int capacity);
+void		init_queue(t_queue q, t_game *game);
 void		push(t_queue *q, t_tile new_point);
 t_tile		pop(t_queue *q);
 int			is_empty(t_queue *q);

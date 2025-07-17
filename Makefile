@@ -13,7 +13,8 @@ SRC = $(SRC_DIR)/so_long.c \
 	$(SRC_DIR)/utils/init.c \
 	$(SRC_DIR)/utils/render.c \
 	$(SRC_DIR)/utils/move_logic.c \
-	$(SRC_DIR)/utils/queue.c
+	$(SRC_DIR)/utils/queue.c \
+	$(SRC_DIR)/utils/bfs.c \
 	
 OBJ = $(SRC:.c=.o)
 LIBFT_A = $(LIBFT_DIR)/libft.a

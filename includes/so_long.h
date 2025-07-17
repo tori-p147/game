@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/16 21:09:37 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:56:35 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# include "bfs.h"
 # include "free_utils.h"
 # include "get_next_line.h"
 # include "init.h"
@@ -37,7 +38,7 @@ typedef struct s_map
 	int		cols;
 	size_t	player_count;
 	size_t	exit_count;
-	size_t	remain_items_count;
+	int		remain_items_count;
 }			t_map;
 
 typedef struct s_game
@@ -49,6 +50,7 @@ typedef struct s_game
 	void	*wall_img;
 	void	*item_img;
 	void	*exit_img;
+	int		total_steps;
 	int		tile_size;
 	int		win_width;
 	int		win_height;
