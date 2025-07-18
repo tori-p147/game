@@ -29,9 +29,9 @@ AR = ar rcs
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 LIBX_FLAGS	= -lXext -lX11
-INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) -I$(GNL_DIR) -I$(PRINTF_DIR)
+INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) -I$(GNL_DIR) -I$(PRINTF_DIR)/includes
 
-all: $(LIBFT_A) $(GNL_A) $(MLX_LIB) $(PRINTF_A) $(NAME)
+all: $(LIBFT_A) $(GNL_A) $(MLX_A) $(PRINTF_A) $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)

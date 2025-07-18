@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:34:44 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 17:54:32 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 20:21:56 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	free_game(t_game *game)
 {
 	int i;
 
-	i = IMG_COUNT;
-	while (i-- > 0)
-		free(game->sprites[IMG_COUNT].img_ptr);
+	i = IMG_COUNT - 1;
+	while (i-- <= 0)
+		free(game->sprites[i].img_ptr);
 	mlx_clear_window(game->mlx_display_ptr, game->user_win_ptr);
 	mlx_destroy_window(game->mlx_display_ptr, game->user_win_ptr);
 	mlx_destroy_display(game->mlx_display_ptr);

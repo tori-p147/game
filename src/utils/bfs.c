@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:23:01 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 18:36:02 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:17:05 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,27 @@ int	is_not_visited_tile(t_game *game, bool **visited, int pos_y, int pos_x)
 void	serch_neighbors(t_game *game, t_queue *q, bool **visited, t_tile curr)
 {
 	char		tile;
-	const int	dy[4] = {-1, 0, 1, 0};
-	const int	dx[4] = {0, -1, 0, 1};
+	const int	dy[MAX_SIDE] = {-1, 0, 1, 0};
+	const int	dx[MAX_SIDE] = {0, -1, 0, 1};
 	t_tile		neighbor;
 	int			i;
 	int			pos_y;
 	int			pos_x;
 
-	i = 0;
-	while (i < 4)
+	i = MAX_SIDE;
+	while (--i >= 0)
 	{
 		pos_y = curr.y + dy[i];
 		pos_x = curr.x + dx[i];
 		if (is_not_visited_tile(game, visited, pos_y, pos_x))
 		{
 			tile = game->map->array[pos_y][pos_x];
-			printf("search tile '%c': y = %d x = %d\n", tile, pos_y, pos_x);
 			if (tile == 'C')
 				game->map->collected_items_count++;
 			visited[pos_y][pos_x] = true;
 			neighbor = create_node(pos_y, pos_x);
-			printf("add neighbors[%d] '%c': y = %d x = %d\n collected = %d\n", i,
-				tile, pos_y, pos_x, game->map->collected_items_count);
 			push(q, neighbor);
 		}
-		i++;
 	}
 }
 
@@ -95,16 +91,18 @@ int	is_has_exit(t_game *game)
 		exit_error("queue.data allocation fail\n", game);
 	init_q(data, &q, game);
 	push(&q, create_node(game->player_y, game->player_x));
+	printf("exit x,y = %d,%d\n", game->exit_x, game->exit_y);
 	while (!is_empty(&q))
 	{
 		curr = pop(&q);
 		if (curr.x == game->exit_x && curr.y == game->exit_y)
-			game->map->has_exit = true;
-		else if (game->map->collected_items_count == game->map->remain_items_count
-			&& game->map->has_exit)
+			game->map->found_exit = true;
+		if (game->map->collected_items_count == game->map->remain_items_count
+			&& game->map->found_exit)
 			return (1);
-		else
-			serch_neighbors(game, &q, visited, curr);
+		printf("COLLECTED: [%d / %d ]\n", game->map->collected_items_count,
+			game->map->remain_items_count);
+		serch_neighbors(game, &q, visited, curr);
 	}
 	return (0);
 }

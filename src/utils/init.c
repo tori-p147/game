@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:37:20 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 19:04:41 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:22:08 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ void	init_window(t_game *game)
 {
 	int		i;
 	int		tile_size;
-	t_img	img;
 	char	*imgs_path[IMG_COUNT] = {"textures/wall.xpm", "textures/usagi.xpm",
-			"textures/item.xpm", "textures/exit.xpm", "textures/space.xpm"};
+			"textures/carrot.xpm", "textures/exit.xpm", "textures/space.xpm"};
 
 	game->tile_size = 48;
 	tile_size = game->tile_size;
+	game->steps_count = 0;
 	game->win_width = game->map->cols * tile_size;
 	game->win_height = game->map->rows * tile_size;
 	game->mlx_display_ptr = mlx_init();
 	game->user_win_ptr = mlx_new_window(game->mlx_display_ptr, game->win_width,
 			game->win_height, "so_long");
-	i = IMG_COUNT - 1;
-	while (i-- <= 0)
+	i = IMG_COUNT;
+	while (--i >= 0)
 	{
-		img = game->sprites[i];
-		img->img_ptr = init_img(game, imgs_path[i], img->w, img->h);
+		game->sprites[i].img_ptr = init_img(game, imgs_path[i],
+				&game->sprites[i].width, &game->sprites[i].height);
 	}
 }
 

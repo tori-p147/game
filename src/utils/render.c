@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 22:10:02 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 18:43:31 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 21:46:02 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	render_map(t_game *game)
 	char	tile;
 	int		x;
 	int		y;
+	int		screen_y;
+	int		screen_x;
+	int		idx;
 
 	y = 0;
 	while (y < game->map->rows)
@@ -45,10 +48,11 @@ void	render_map(t_game *game)
 		x = 0;
 		while (x < game->map->cols)
 		{
+			screen_x = x * game->tile_size;
+			screen_y = y * game->tile_size;
 			tile = game->map->array[y][x];
-			printf("%c\n", tile);
-			render_img(game, x * game->tile_size, y * game->tile_size,
-				game->sprites[get_img_index(tile)].img_ptr);
+			idx = get_img_index(tile);
+			render_img(game, screen_x, screen_y, game->sprites[idx].img_ptr);
 			if (tile == 'P')
 			{
 				game->player_x = x;

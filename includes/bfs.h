@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:23:24 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 17:02:34 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:15:17 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BFS_H
 # define BFS_H
+# define MAX_SIDE 4
 
 # include "queue.h"
 # include "so_long.h"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:30:33 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 16:22:36 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:41:03 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@ void	move_player(t_game *game, int new_y, int new_x)
 		{
 			if (game->map->remain_items_count != 0)
 			{
-				printf("Check %d item(s) before exit",
+				ft_printf("Check %d item(s) before exit\n",
 					game->map->remain_items_count);
 			}
 			else
 			{
-				mlx_string_put(game->mlx_display_ptr, game->user_win_ptr, 10,
-					10, 0xFFFFFF, "You win!");
+				ft_printf("YOU WIN!\n");
 				free_game(game);
 			}
 		}
@@ -41,6 +40,7 @@ void	move_player(t_game *game, int new_y, int new_x)
 			game->map->array[new_y][new_x] = 'P';
 			game->player_y = new_y;
 			game->player_x = new_x;
+			ft_printf("Steps: %d\n", game->steps_count++);
 		}
 	}
 	render_map(game);

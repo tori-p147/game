@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 17:52:20 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:29:37 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 # include "bfs.h"
 # include "free_utils.h"
+# include "ft_printf.h"
 # include "get_next_line.h"
 # include "init.h"
 # include "move_logic.h"
@@ -44,11 +45,11 @@ typedef struct s_map
 	char	**array;
 	int		rows;
 	int		cols;
-	int	player_count;
-	int	exit_count;
+	int		player_count;
+	int		exit_count;
 	int		remain_items_count;
 	int		collected_items_count;
-	bool	has_exit;
+	bool	found_exit;
 }			t_map;
 
 typedef struct s_game
@@ -62,6 +63,7 @@ typedef struct s_game
 	int		player_y;
 	int		exit_x;
 	int		exit_y;
+	int		steps_count;
 	t_map	*map;
 	t_img	sprites[IMG_COUNT];
 }			t_game;
