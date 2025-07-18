@@ -6,38 +6,31 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:35:23 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/17 19:01:54 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 14:25:32 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <so_long.h>
 
-void	init_queue(t_queue q, t_game *game)
+t_tile	*init_data(t_game *game)
 {
-	q.capacity = game->map->rows * game->map->cols;
-	q.data = malloc(sizeof(t_tile) * q.capacity);
-	if (!q.data)
-		exit_error("queue->data memory allocation fail", game);
-	q.head = 0;
-	q.tail = 0;
+	t_tile *data;
+	
+	data = malloc(sizeof(t_tile) * game->map->rows * game->map->cols);
+	if (!data)
+		return (NULL);
+	return (data);
 }
 
 void	push(t_queue *q, t_tile new_point)
 {
-	int	i;
-
 	if (q->tail >= q->capacity)
 	{
 		printf("Queue overflow\n");
 		return ;
 	}
-	i = q->head;
 	q->data[q->tail++] = new_point;
-	while (i < q->tail)
-	{
-		printf("AFTER push y = %d, x = %d\n", q->data[i].y, q->data[i].x);
-		i++;
-	}
+	printf("IN Queue AFTER push y = %d, x = %d, q.tail = %d\n", q->data[q->tail].y, q->data[q->tail].x, q->tail);
 }
 
 t_tile	pop(t_queue *q)

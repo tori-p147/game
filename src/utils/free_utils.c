@@ -6,28 +6,21 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:34:44 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/17 17:54:44 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 10:50:25 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_visited(bool ***visited, t_game *game)
+void	free_visited(bool **visited, t_game *game)
 {
-	int	y;
-	int	x;
+	int	i;
 
-	y = 0;
-	while (y < game->map->rows)
+	i = 0;
+	while (i < game->map->rows)
 	{
-		x = 0;
-		while (x < game->map->cols)
-		{
-			free(visited[y][x]);
-			x++;
-		}
-		free(visited[y]);
-		y++;
+		free(visited[i]);
+		i++;
 	}
 	free(visited);
 }

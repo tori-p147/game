@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:30:33 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/17 18:01:36 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:22:36 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	move_player(t_game *game, int new_y, int new_x)
 {
 	char	target_tile;
 
-	// int	steps_count;
-	// steps_count = 0;
 	target_tile = game->map->array[new_y][new_x];
 	if (target_tile != '1')
 	{

@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/17 15:15:42 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:22:52 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ void	alloc_map_arrays(const char *map_name, t_game *game)
 	count_map_lines(map_name, game);
 	game->map->array = malloc(sizeof(char *) * (game->map->rows + 1));
 	if (!game->map->array)
-		exit_error("map.array[] memory allocation fail", game);
+		exit_error("map.array memory allocation fail", game);
 	i = 0;
 	while (i < game->map->cols - 1)
 	{
 		game->map->array[i] = malloc(sizeof(char) * (game->map->cols + 1));
 		if (!game->map->array[i])
-			exit_error("map.array[][] memory allocation fail", game);
+			exit_error("map.array[i] memory allocation fail", game);
 		i++;
 	}
 	game->map->array[i] = NULL;

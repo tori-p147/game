@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/17 17:56:35 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:41:17 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_map
 	size_t	player_count;
 	size_t	exit_count;
 	int		remain_items_count;
+	int		collected_items_count;
+	bool	has_exit;
 }			t_map;
 
 typedef struct s_game
