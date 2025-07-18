@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:34:44 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 10:50:25 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:54:32 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	free_map(t_map *map)
 
 int	free_game(t_game *game)
 {
-	free(game->player_img);
-	free(game->wall_img);
-	free(game->exit_img);
-	free(game->item_img);
-	free(game->space_img);
+	int i;
+
+	i = IMG_COUNT;
+	while (i-- > 0)
+		free(game->sprites[IMG_COUNT].img_ptr);
 	mlx_clear_window(game->mlx_display_ptr, game->user_win_ptr);
 	mlx_destroy_window(game->mlx_display_ptr, game->user_win_ptr);
 	mlx_destroy_display(game->mlx_display_ptr);

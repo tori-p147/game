@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:23:01 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 16:44:38 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 18:36:02 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	serch_neighbors(t_game *game, t_queue *q, bool **visited, t_tile curr)
 				game->map->collected_items_count++;
 			visited[pos_y][pos_x] = true;
 			neighbor = create_node(pos_y, pos_x);
-			printf("add neighbors[%d] '%c': y = %d x = %d\n collected = %d", i,
+			printf("add neighbors[%d] '%c': y = %d x = %d\n collected = %d\n", i,
 				tile, pos_y, pos_x, game->map->collected_items_count);
 			push(q, neighbor);
 		}
@@ -72,6 +72,14 @@ bool	**init_visited(t_game *game)
 	return (visited);
 }
 
+void	init_q(t_tile *data, t_queue *q, t_game *game)
+{
+	q->capacity = game->map->rows * game->map->cols;
+	q->data = data;
+	q->head = 0;
+	q->tail = 0;
+}
+
 int	is_has_exit(t_game *game)
 {
 	t_tile	curr;
@@ -85,29 +93,18 @@ int	is_has_exit(t_game *game)
 	data = init_data(game);
 	if (!data)
 		exit_error("queue.data allocation fail\n", game);
-	q.capacity = game->map->rows * game->map->cols;
-	q.data = data;
-	q.head = 0;
-	q.tail = 0;
-	printf("PLAYER: y=%d x=%d\n", game->player_y, game->player_x);
+	init_q(data, &q, game);
 	push(&q, create_node(game->player_y, game->player_x));
 	while (!is_empty(&q))
 	{
 		curr = pop(&q);
-		printf("poped CURRENT NODE: y = %d x = %d (collected: %d)\n", curr.y,
-			curr.x, game->map->collected_items_count);
 		if (curr.x == game->exit_x && curr.y == game->exit_y)
 			game->map->has_exit = true;
 		else if (game->map->collected_items_count == game->map->remain_items_count
 			&& game->map->has_exit)
 			return (1);
 		else
-		{
-			printf("EXIT NOT FIND (y = %d x = %d): collected %d / %d\n", curr.y,
-				curr.x, game->map->collected_items_count,
-				game->map->remain_items_count);
 			serch_neighbors(game, &q, visited, curr);
-		}
 	}
 	return (0);
 }

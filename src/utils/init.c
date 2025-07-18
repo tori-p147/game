@@ -6,59 +6,24 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:37:20 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 16:32:01 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 19:04:41 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_space(t_game *game)
+void	*init_img(t_game *game, char *img_path, int *w, int *h)
 {
-	int	img_width;
-	int	img_height;
-
-	game->space_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"textures/space.xpm", &img_width, &img_height);
-}
-
-void	init_player(t_game *game)
-{
-	int	img_width;
-	int	img_height;
-
-	game->player_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"textures/usagi.xpm", &img_width, &img_height);
-}
-void	init_wall(t_game *game)
-{
-	int	img_width;
-	int	img_height;
-
-	game->wall_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"textures/wall.xpm", &img_width, &img_height);
-}
-
-void	init_item(t_game *game)
-{
-	int	img_width;
-	int	img_height;
-
-	game->item_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"textures/carrot.xpm", &img_width, &img_height);
-}
-
-void	init_exit(t_game *game)
-{
-	int	img_width;
-	int	img_height;
-
-	game->exit_img = mlx_xpm_file_to_image(game->mlx_display_ptr,
-			"textures/exit.xpm", &img_width, &img_height);
+	return (mlx_xpm_file_to_image(game->mlx_display_ptr, img_path, w, h));
 }
 
 void	init_window(t_game *game)
 {
-	int	tile_size;
+	int		i;
+	int		tile_size;
+	t_img	img;
+	char	*imgs_path[IMG_COUNT] = {"textures/wall.xpm", "textures/usagi.xpm",
+			"textures/item.xpm", "textures/exit.xpm", "textures/space.xpm"};
 
 	game->tile_size = 48;
 	tile_size = game->tile_size;
@@ -67,11 +32,12 @@ void	init_window(t_game *game)
 	game->mlx_display_ptr = mlx_init();
 	game->user_win_ptr = mlx_new_window(game->mlx_display_ptr, game->win_width,
 			game->win_height, "so_long");
-	init_space(game);
-	init_player(game);
-	init_wall(game);
-	init_item(game);
-	init_exit(game);
+	i = IMG_COUNT - 1;
+	while (i-- <= 0)
+	{
+		img = game->sprites[i];
+		img->img_ptr = init_img(game, imgs_path[i], img->w, img->h);
+	}
 }
 
 void	init_map(const char *map_name, t_game *game)

@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:40:07 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/17 16:36:26 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 18:59:48 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,5 @@ typedef struct s_game	t_game;
 
 void					init_window(t_game *game);
 void					init_map(const char *map_name, t_game *game);
-void					init_space(t_game *game);
-void					init_exit(t_game *game);
-void					init_item(t_game *game);
-void					init_palyer(t_game *game);
-void					init_wall(t_game *game);
-
+void					*init_img(t_game *game, char *img_path, int *w, int *h);
 #endif

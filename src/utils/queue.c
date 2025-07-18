@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:35:23 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 14:25:32 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:50:34 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ t_tile	*init_data(t_game *game)
 
 void	push(t_queue *q, t_tile new_point)
 {
-	if (q->tail >= q->capacity)
-	{
-		printf("Queue overflow\n");
-		return ;
-	}
 	q->data[q->tail++] = new_point;
 	printf("IN Queue AFTER push y = %d, x = %d, q.tail = %d\n", q->data[q->tail].y, q->data[q->tail].x, q->tail);
 }
