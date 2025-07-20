@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 16:37:20 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 22:22:08 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/19 19:10:24 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@ void	init_window(t_game *game)
 {
 	int		i;
 	int		tile_size;
-	char	*imgs_path[IMG_COUNT] = {"textures/wall.xpm", "textures/usagi.xpm",
-			"textures/carrot.xpm", "textures/exit.xpm", "textures/space.xpm"};
+	char	*imgs_path[IMG_COUNT];
 
+	imgs_path[0] = "textures/wall.xpm";
+	imgs_path[1] = "textures/usagi.xpm";
+	imgs_path[2] = "textures/carrot.xpm";
+	imgs_path[3] = "textures/exit.xpm";
+	imgs_path[4] = "textures/space.xpm";
 	game->tile_size = 48;
 	tile_size = game->tile_size;
 	game->steps_count = 0;
@@ -54,7 +58,7 @@ void	init_map(const char *map_name, t_game *game)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		game->map->array[i] = ft_strdup(line);
+		ft_strlcpy(game->map->array[i], line, game->map->cols + 1);
 		i++;
 		free(line);
 		line = get_next_line(fd);
@@ -64,4 +68,12 @@ void	init_map(const char *map_name, t_game *game)
 	game->map->exit_count = 0;
 	game->map->remain_items_count = 0;
 	game->map->collected_items_count = 0;
+}
+
+void	init_q(t_tile *data, t_queue *q, t_game *game)
+{
+	q->capacity = game->map->rows * game->map->cols;
+	q->data = data;
+	q->head = 0;
+	q->tail = 0;
 }

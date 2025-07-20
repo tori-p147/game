@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 22:10:02 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 21:46:02 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/19 16:10:51 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ void	render_img(t_game *game, int screen_x, int screen_y, void *target_img)
 
 void	render_map(t_game *game)
 {
-	char	tile;
-	int		x;
-	int		y;
-	int		screen_y;
-	int		screen_x;
-	int		idx;
+	int	x;
+	int	y;
+	int	screen_y;
+	int	screen_x;
 
 	y = 0;
 	while (y < game->map->rows)
@@ -50,10 +48,9 @@ void	render_map(t_game *game)
 		{
 			screen_x = x * game->tile_size;
 			screen_y = y * game->tile_size;
-			tile = game->map->array[y][x];
-			idx = get_img_index(tile);
-			render_img(game, screen_x, screen_y, game->sprites[idx].img_ptr);
-			if (tile == 'P')
+			render_img(game, screen_x, screen_y,
+				game->sprites[get_img_index(game->map->array[y][x])].img_ptr);
+			if (game->map->array[y][x] == 'P')
 			{
 				game->player_x = x;
 				game->player_y = y;

@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:31:51 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 22:29:48 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:54:58 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ typedef enum e_keycode
 
 void					move_player(t_game *game, int dx, int dy);
 int						key_press(int keycode, t_game *game);
+void					replace_player_pos(t_game *game, int new_y, int new_x);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:23:24 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 22:15:17 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:08:55 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void					serch_neighbors(t_game *game, t_queue *q,
 							bool **visited, t_tile curr);
 int						is_has_exit(t_game *game);
 bool					**init_visited(t_game *game);
-void					init_q(t_tile *data, t_queue *q, t_game *game);
+int						search_exit(t_game *game, t_queue *q,
+							bool **visited);
 
 #endif

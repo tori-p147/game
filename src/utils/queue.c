@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:35:23 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 21:48:22 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:10:21 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,11 @@ void	push(t_queue *q, t_tile new_point)
 
 t_tile	pop(t_queue *q)
 {
-	int		i;
-	t_tile	curr;
-
-	i = q->head;
-	curr = q->data[q->head++];
-	while (i < q->tail)
-	{
-		printf("AFTER pop y = %d, x = %d\n", q->data[i].y, q->data[i].x);
-		i++;
-	}
-	return (curr);
+	return (q->data[q->head++]);
 }
 
 int	is_empty(t_queue *q)
 {
-	printf("CHECK is empty q->head: %d q->tail: %d\n", q->head, q->tail);
 	return (q->head == q->tail);
 }
 

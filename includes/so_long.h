@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 22:29:37 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/19 16:58:12 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,5 @@ typedef struct s_game
 int			exit_error(const char *msg, t_game *game);
 void		alloc_map_arrays(const char *map_name, t_game *game);
 void		parse_map_objects(t_game *game);
-void		validate_tile(t_game *game, char tile, int y, int x);
-void		validate_tile(t_game *game, char tile, int y, int x);
 
 #endif

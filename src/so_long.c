@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmatsuda <vmatsuda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 16:22:52 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/19 19:08:51 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	exit_error(const char *msg, t_game *game)
 {
-	if (game)
-		free_map(game->map);
+	free_map(game->map);
+	free_game(game);
 	write(2, msg, ft_strlen(msg));
 	exit(EXIT_FAILURE);
 }
@@ -29,7 +29,7 @@ void	count_map_lines(const char *map_name, t_game *game)
 
 	fd = open(map_name, O_RDONLY);
 	if (fd < 0)
-		exit_error("error occurred when trying read map file", NULL);
+		exit_error("error occurred when trying read map file", game);
 	line = get_next_line(fd);
 	rows_count = 0;
 	while (line != NULL)
@@ -39,6 +39,7 @@ void	count_map_lines(const char *map_name, t_game *game)
 		free(line);
 		line = get_next_line(fd);
 	}
+	free(line);
 	close(fd);
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
@@ -52,43 +53,20 @@ void	alloc_map_arrays(const char *map_name, t_game *game)
 	int	i;
 
 	count_map_lines(map_name, game);
-	game->map->array = malloc(sizeof(char *) * (game->map->rows + 1));
+	game->map->array = malloc(sizeof(char *) * (game->map->rows));
 	if (!game->map->array)
 		exit_error("map.array memory allocation fail", game);
 	i = 0;
-	while (i < game->map->cols - 1)
+	while (i < game->map->rows)
 	{
 		game->map->array[i] = malloc(sizeof(char) * (game->map->cols + 1));
 		if (!game->map->array[i])
+		{
+			while (--i >= 0)
+				free(game->map->array[i]);
 			exit_error("map.array[i] memory allocation fail", game);
+		}
 		i++;
-	}
-	game->map->array[i] = NULL;
-}
-
-void	validate_tile(t_game *game, char tile, int y, int x)
-{
-	if ((y == 0 || y == game->map->rows - 1 || x == 0 || x == game->map->cols
-			- 1) && !is_wall(tile))
-		exit_error("Error occurred because map haven`t walls\n", game);
-	else if (tile == 'P')
-	{
-		game->map->player_count++;
-		game->player_x = x;
-		game->player_y = y;
-	}
-	else if (tile == 'C')
-		game->map->remain_items_count++;
-	else if (tile == 'E')
-	{
-		game->map->exit_count++;
-		game->exit_x = x;
-		game->exit_y = y;
-	}
-	else
-	{
-		if (tile != '0' && tile != '1')
-			exit_error("Error: map has invalid character\n", game);
 	}
 }
 
@@ -112,7 +90,7 @@ void	parse_map_objects(t_game *game)
 	}
 	validate_objects_count(game);
 	if (!is_has_exit(game))
-		exit_error("map has not exit", game);
+		exit_error("Error: map has not exit", game);
 }
 
 int	main(int argc, char **argv)
@@ -121,7 +99,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		perror("args error");
+		ft_printf("args error");
 		return (-1);
 	}
 	init_map(argv[1], &game);
