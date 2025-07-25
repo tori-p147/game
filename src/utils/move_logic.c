@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:30:33 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/19 15:43:43 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/25 20:20:40 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	move_player(t_game *game, int new_y, int new_x)
 			{
 				ft_printf("YOU WIN!\n");
 				free_game(game);
+				exit(0);
 			}
 		}
 	}
@@ -51,6 +52,8 @@ void	replace_player_pos(t_game *game, int new_y, int new_x)
 
 int	key_press(int keycode, t_game *game)
 {
+	if (!game || !game->user_win_ptr)
+		return (1);
 	if (keycode == KEY_W)
 		move_player(game, game->player_y - 1, game->player_x);
 	else if (keycode == KEY_A)

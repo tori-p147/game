@@ -6,30 +6,14 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:36:09 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/19 17:09:41 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:45:19 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef QUEUE_H
 # define QUEUE_H
 
-# include "so_long.h"
-
-typedef struct s_game	t_game;
-
-typedef struct s_tile
-{
-	int					x;
-	int					y;
-}						t_tile;
-
-typedef struct s_queue
-{
-	t_tile				*data;
-	int					head;
-	int					tail;
-	int					capacity;
-}						t_queue;
+# include "structs.h"
 
 t_tile					*init_data(t_game *game);
 void					push(t_queue *q, t_tile new_point);

@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:23:24 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/19 17:08:55 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:45:16 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,9 @@
 # define BFS_H
 # define MAX_SIDE 4
 
-# include "queue.h"
-# include "so_long.h"
 # include <stdbool.h>
+# include "structs.h"
 
-typedef struct s_tile	t_tile;
-typedef struct s_queue	t_queue;
-typedef struct s_game	t_game;
-
-int						exit_bts(const char *msg, bool **visited, t_tile *data,
-							t_game *game);
 int						is_not_visited_tile(t_game *game, bool **visited, int y,
 							int x);
 void					serch_neighbors(t_game *game, t_queue *q,

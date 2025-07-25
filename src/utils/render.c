@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 22:10:02 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/19 16:10:51 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/20 23:04:05 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	get_img_index(char tile)
 
 void	render_img(t_game *game, int screen_x, int screen_y, void *target_img)
 {
+	if (!game || !game->mlx_display_ptr || !game->user_win_ptr || !target_img)
+		return ;
 	mlx_put_image_to_window(game->mlx_display_ptr, game->user_win_ptr,
 		target_img, screen_x, screen_y);
 }

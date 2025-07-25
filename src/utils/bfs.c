@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:23:01 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/19 17:51:40 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:12:55 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ bool	**init_visited(t_game *game)
 		visited[y] = malloc(sizeof(bool) * game->map->cols + 1);
 		if (!visited[y])
 		{
-			free_visited(visited, game);
+			while (--y >= 0)
+				free(visited[y]);
 			return (NULL);
 		}
-		memset(visited[y], 0, sizeof(bool) * game->map->cols);
+		memset(visited[y], 0, sizeof(bool) * game->map->cols + 1);
 		y++;
 	}
 	return (visited);
@@ -72,6 +73,7 @@ int	is_has_exit(t_game *game)
 	bool	**visited;
 	bool	is_exit_found;
 
+	is_exit_found = false;
 	visited = init_visited(game);
 	if (!visited)
 		exit_error("visited allocation fail\n", game);

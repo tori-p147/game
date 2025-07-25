@@ -6,16 +6,14 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:31:51 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/18 22:54:58 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:45:03 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MOVE_LOGIC_H
 # define MOVE_LOGIC_H
 
-# include "so_long.h"
-
-typedef struct s_game	t_game;
+# include "structs.h" 
 
 typedef enum e_keycode
 {

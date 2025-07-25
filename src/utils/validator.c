@@ -6,11 +6,39 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:23:31 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/19 16:58:28 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:47:37 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	count_map_lines(const char *map_name, t_game *game)
+{
+	int		fd;
+	char	*line;
+	size_t	rows_count;
+	size_t	cols_count;
+
+	fd = open(map_name, O_RDONLY);
+	if (fd < 0)
+		exit_error("error occurred when trying read map file\n", game);
+	line = get_next_line(fd);
+	rows_count = 0;
+	while (line != NULL)
+	{
+		cols_count = validate_rows_length(line);
+		rows_count++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	close(fd);
+	game->map = malloc(sizeof(t_map));
+	if (!game->map)
+		exit_error("game.map allocation fail\n", game);
+	game->map->rows = rows_count;
+	game->map->cols = cols_count;
+}
 
 size_t	validate_rows_length(char *line)
 {
@@ -23,7 +51,7 @@ size_t	validate_rows_length(char *line)
 		new_line_length--;
 	if (old_line_length != 0 && old_line_length != new_line_length)
 	{
-		printf("Error: map.rows length is not same\n");
+		ft_printf("Error: map.rows length is not same\n");
 		exit(-1);
 	}
 	old_line_length = new_line_length;
