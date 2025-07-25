@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:34:44 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/25 20:10:33 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/25 21:30:55 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ void	free_game(t_game *game)
 	if (game->images_initialized)
 		free_all_images(game);
 	if (game->user_win_ptr)
+	{
 		mlx_clear_window(game->mlx_display_ptr, game->user_win_ptr);
-	if (game->user_win_ptr)
 		mlx_destroy_window(game->mlx_display_ptr, game->user_win_ptr);
+	}
 	if (game->mlx_display_ptr)
 	{
 		mlx_destroy_display(game->mlx_display_ptr);

@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:23:01 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/20 22:12:55 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/25 21:23:09 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 int	is_not_visited_tile(t_game *game, bool **visited, int pos_y, int pos_x)
 {
-	return (!is_wall(game->map->array[pos_y][pos_x]) && pos_y < game->map->rows
-		&& pos_y >= 0 && pos_x < game->map->cols && pos_x >= 0
-		&& visited[pos_y][pos_x] == false);
+	if (pos_y < 0 || pos_y >= game->map->rows)
+		return (0);
+	if (pos_x < 0 || pos_x >= game->map->cols)
+		return (0);
+	if (visited[pos_y][pos_x])
+		return (0);
+	if (game->map->array[pos_y][pos_x] == '1')
+		return (0);
+	return (1);
 }
 
 void	serch_neighbors(t_game *game, t_queue *q, bool **visited, t_tile curr)
@@ -53,14 +59,14 @@ bool	**init_visited(t_game *game)
 	y = 0;
 	while (y < game->map->rows)
 	{
-		visited[y] = malloc(sizeof(bool) * game->map->cols + 1);
+		visited[y] = malloc(sizeof(bool) * (game->map->cols));
 		if (!visited[y])
 		{
 			while (--y >= 0)
 				free(visited[y]);
 			return (NULL);
 		}
-		memset(visited[y], 0, sizeof(bool) * game->map->cols + 1);
+		memset(visited[y], 0, sizeof(bool) * (game->map->cols));
 		y++;
 	}
 	return (visited);
@@ -73,7 +79,8 @@ int	is_has_exit(t_game *game)
 	bool	**visited;
 	bool	is_exit_found;
 
-	is_exit_found = false;
+	game->map->collected_items_count = 0;
+	game->map->found_exit = false;
 	visited = init_visited(game);
 	if (!visited)
 		exit_error("visited allocation fail\n", game);
@@ -92,6 +99,7 @@ int	search_exit(t_game *game, t_queue *q, bool **visited)
 	t_tile	curr;
 
 	curr = create_node(game->player_y, game->player_x);
+	visited[game->player_y][game->player_x] = true;
 	push(q, curr);
 	while (!is_empty(q))
 	{

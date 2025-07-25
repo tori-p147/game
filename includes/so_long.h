@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:42:59 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/20 19:41:59 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/25 21:45:53 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@
 int		exit_error(const char *msg, t_game *game);
 void	alloc_map_arrays(const char *map_name, t_game *game);
 void	parse_map_objects(t_game *game);
+int		close_win(t_game *game);
+int		main(int argc, char **argv);
 
 #endif

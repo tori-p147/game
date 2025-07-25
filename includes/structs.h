@@ -6,12 +6,12 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 18:40:30 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/20 22:23:45 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/25 21:17:23 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 # define IMG_COUNT 5
 
 # include <stdbool.h>
