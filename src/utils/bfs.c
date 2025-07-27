@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:23:01 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/25 21:23:09 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/27 15:15:03 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_not_visited_tile(t_game *game, bool **visited, int pos_y, int pos_x)
 	return (1);
 }
 
-void	serch_neighbors(t_game *game, t_queue *q, bool **visited, t_tile curr)
+void	serch_neighbours(t_game *game, t_queue *q, bool **visited, t_tile curr)
 {
 	int			i;
 	int			pos_y;
@@ -38,6 +38,12 @@ void	serch_neighbors(t_game *game, t_queue *q, bool **visited, t_tile curr)
 	{
 		pos_y = curr.y + dy[i];
 		pos_x = curr.x + dx[i];
+		if (game->map->array[pos_y][pos_x] == 'E')
+		{
+			game->map->found_exit = true;
+			visited[pos_y][pos_x] = true;
+			continue ;
+		}
 		if (is_not_visited_tile(game, visited, pos_y, pos_x))
 		{
 			if (game->map->array[pos_y][pos_x] == 'C')
@@ -98,18 +104,17 @@ int	search_exit(t_game *game, t_queue *q, bool **visited)
 {
 	t_tile	curr;
 
+	game->map->found_exit = false;
 	curr = create_node(game->player_y, game->player_x);
 	visited[game->player_y][game->player_x] = true;
 	push(q, curr);
 	while (!is_empty(q))
 	{
 		curr = pop(q);
-		if (curr.x == game->exit_x && curr.y == game->exit_y)
-			game->map->found_exit = true;
-		if (game->map->collected_items_count == game->map->remain_items_count
-			&& game->map->found_exit)
-			return (1);
-		serch_neighbors(game, q, visited, curr);
+		serch_neighbours(game, q, visited, curr);
 	}
-	return (0);
+	if (game->map->collected_items_count != game->map->remain_items_count
+		|| !game->map->found_exit)
+		return (0);
+	return (1);
 }

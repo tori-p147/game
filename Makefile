@@ -8,6 +8,7 @@ GNL_DIR = gnl
 PRINTF_DIR = printf
 
 SRC = $(SRC_DIR)/so_long.c \
+	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/utils/validator.c \
 	$(SRC_DIR)/utils/free_utils.c \
 	$(SRC_DIR)/utils/init.c \
@@ -21,7 +22,7 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 MLX_A = $(MLX_DIR)/libmlx_Linux.a
 GNL_A = $(GNL_DIR)/gnl.a
 PRINTF_A = $(PRINTF_DIR)/libftprintf.a
-HOME = ..
+HOME = /home/vmatsuda
 
 CC = cc
 COPY = cp

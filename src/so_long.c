@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 19:41:22 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/25 21:49:15 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/27 15:24:04 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,4 @@ int	close_win(t_game *game)
 	free_game(game);
 	exit(0);
 	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	t_game	game;
-
-	if (argc == 2)
-	{
-		init_map(argv[1], &game);
-		parse_map_objects(&game);
-		init_window(&game);
-		render_map(&game);
-		mlx_hook(game.user_win_ptr, KeyPress, KeyPressMask, key_press, &game);
-		mlx_hook(game.user_win_ptr, DestroyNotify, NoEventMask, close_win,
-			&game);
-		mlx_loop(game.mlx_display_ptr);
-		return (0);
-	}
-	ft_printf("args error");
-	return (1);
 }

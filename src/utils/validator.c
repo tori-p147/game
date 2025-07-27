@@ -6,7 +6,7 @@
 /*   By: vmatsuda <vmatsuda@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:23:31 by vmatsuda          #+#    #+#             */
-/*   Updated: 2025/07/20 22:47:37 by vmatsuda         ###   ########.fr       */
+/*   Updated: 2025/07/26 20:52:32 by vmatsuda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ int	is_wall(char c)
 
 void	validate_objects_count(t_game *game)
 {
-	if (game->map->player_count > 1 || game->map->player_count == 0)
+	if (game->map->player_count != 1)
 		exit_error("Error occurred because player not one\n", game);
 	if (game->map->player_count == 0)
 		exit_error("Error occurred because player undefined\n", game);
 	if (game->map->remain_items_count == 0)
 		exit_error("Error occurred because collectable not exist\n", game);
-	if (game->map->exit_count == 0)
-		exit_error("Error occurred because exit not exists\n", game);
+	if (game->map->exit_count != 1)
+		exit_error("Error occurred because exit not one\n", game);
 }
 
 void	validate_tile(t_game *game, char tile, int y, int x)
